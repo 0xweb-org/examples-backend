@@ -20,6 +20,9 @@ jobs:
           name: 0xweb init
           command: npx 0xweb init --hardhat
       - run:
+          name: Install openzeppelin
+          command: npm i @openzeppelin/contracts @openzeppelin/contracts-upgradeable
+      - run:
           name: Install ts node for TypeScript
           command: npm i ts-node
       - run:
