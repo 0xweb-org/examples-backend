@@ -29,7 +29,7 @@ npx ts-node test/check.ts --pin test
 
 
 echo "Change generation to JavaScript"
-npx 0xweb config --set "settings.generate.target=js;settings.generate.extension=mjs"
+npx 0xweb config --set "settings.generate.target=mjs"
 
 
 echo "Create contracts JavaScript client"
