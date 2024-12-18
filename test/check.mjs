@@ -1,5 +1,5 @@
 
-import { AppVersionManager } from '../0xc/hardhat/AppVersionManager/AppVersionManager.js';
+import { AppVersionManager } from '../0xc/hardhat/AppVersionManager/AppVersionManager.mjs';
 import { ChainAccountService } from 'dequanto/ChainAccountService';
 import { Web3ClientFactory } from 'dequanto/clients/Web3ClientFactory';
 import { Config } from 'dequanto/config/Config';

@@ -30,6 +30,8 @@ jobs:
           command: npx hardhat node
           background: true
       - run:
+          command: sleep 10;
+      - run:
           name: Execute CLI test commands
           command: bash deploy-cli.sh
       - run:
