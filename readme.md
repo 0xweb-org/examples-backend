@@ -1,10 +1,10 @@
 ### Blockchain-as-a-Backend
 
-An example, how a Contract could be like the REST endpoint for your frontend application.
-
+This repository demonstrates how a smart contract can function as a REST-like endpoint for frontend applications. It also serves as a CI pipeline for publishing the 0xweb package, streamlining the development and deployment process.
 
 
 > Further reading https://dev.kit.eco/blockchain-as-a-backend
+
 ----
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/0xweb-org/examples-backend/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/0xweb-org/examples-backend/tree/master)
