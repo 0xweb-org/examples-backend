@@ -1,0 +1,44 @@
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+orbs:
+  # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
+  node: circleci/node@5.0.2
+
+jobs:
+  build-and-test:
+    # These next lines define a Docker executor: https://circleci.com/docs/2.0/executor-types/
+    # https://circleci.com/developer/images/image/cimg/node
+    docker:
+      - image: cimg/node:18.7
+    steps:
+      - checkout
+      - run:
+          name: NPM 0xweb
+          command: npm i 0xweb@latest
+      - run:
+          name: 0xweb init
+          command: npx 0xweb init --hardhat
+      - run:
+          name: Install ts node for TypeScript
+          command: npm i ts-node
+      - run:
+          name: Start hardhat
+          command: npx hardhat node
+          background: true
+      - run:
+          name: Execute CLI test commands
+          command: ./deploy-cli.sh
+      - run:
+          name: Execute Script test commands
+          command: npx ts-node ./deploy-api.ts
+
+
+
+workflows:
+  # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
+  # CircleCI will run this workflow on every commit.
+  # https://circleci.com/docs/2.0/configuration-reference/#workflows
+  TestRunner:
+    jobs:
+      - build-and-test
