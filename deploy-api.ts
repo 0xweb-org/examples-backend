@@ -3,8 +3,8 @@ import { Web3ClientFactory } from 'dequanto/clients/Web3ClientFactory';
 import { Deployments } from 'dequanto/contracts/deploy/Deployments';
 import { l } from 'dequanto/utils/$logger';
 import { $require } from 'dequanto/utils/$require';
-import { AppVersionManager } from './0xc/hardhat/AppVersionManager/AppVersionManager';
 import { Config } from 'dequanto/config/Config';
+import { AppVersionManagerUpgradeable } from './0xc/hardhat/AppVersionManagerUpgradeable/AppVersionManagerUpgradeable';
 
 
 
@@ -20,9 +20,10 @@ async function main () {
 
     let client = await Web3ClientFactory.getAsync('hardhat');
     let deployments = new Deployments(client, account);
-    let { contract: manager } = await deployments.ensureWithProxy(AppVersionManager, {
+    let { contract: manager } = await deployments.ensureWithProxy(AppVersionManagerUpgradeable, {
         id: 'AppVersionManagerFoo',
-        arguments: []
+        arguments: [],
+        initialize: [ account.address ]
     });
 
     await manager.$receipt().updateInfo(account, `Foo Bar`);
