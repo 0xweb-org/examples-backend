@@ -8,7 +8,7 @@ echo "Fund tester"
 npx 0xweb hardhat setBalance tester 2ether --pin test
 
 echo "Compile Upgradeable — used later in api test"
-npx 0xweb compile .\contracts\AppVersionManagerUpgradeable.sol
+npx 0xweb compile ./contracts/AppVersionManagerUpgradeable.sol
 
 echo "Deploy contract"
 npx 0xweb deploy ./contracts/AppVersionManager.sol --chain hardhat --pin test
