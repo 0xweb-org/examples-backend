@@ -20,17 +20,17 @@ jobs:
           name: 0xweb init
           command: npx 0xweb init --hardhat
       - run:
+          name: Start hardhat
+          command: npx hardhat node
+          background: true
+      - run:
+          command: npx 0xweb --version && sleep 4;
+      - run:
           name: Install openzeppelin
           command: npm i @openzeppelin/contracts @openzeppelin/contracts-upgradeable
       - run:
           name: Install ts node for TypeScript
           command: npm i ts-node
-      - run:
-          name: Start hardhat
-          command: npx hardhat node
-          background: true
-      - run:
-          command: sleep 10;
       - run:
           name: Execute CLI test commands
           command: bash deploy-cli.sh
