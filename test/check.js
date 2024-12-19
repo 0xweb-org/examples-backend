@@ -1,4 +1,5 @@
 
+const { AppVersionManager } = require('../0xc/hardhat/AppVersionManager/AppVersionManager.js');
 const { ChainAccountService } = require('dequanto/ChainAccountService');
 const { Web3ClientFactory } = require('dequanto/clients/Web3ClientFactory');
 const { Config } = require('dequanto/config/Config');
@@ -18,6 +19,14 @@ async function main () {
 
     let client = await Web3ClientFactory.getAsync('hardhat');
     l`Block: ${ await client.getBlockNumber() }`;
+
+    let deployments = new Deployments(client, account);
+    let manager = await deployments.get(AppVersionManager);
+
+    let title = await manager.title()
+
+    l`Title: "${title}"`;
+    $require.eq(title, 'MySuperApp', `Title does not match expected value`);
 };
 
 main().then(

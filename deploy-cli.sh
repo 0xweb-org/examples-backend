@@ -30,7 +30,7 @@ echo "Execute TypesScript test script"
 npx ts-node test/check.ts --pin test
 
 
-echo "Change generation to JavaScript"
+echo "➡️ Change generation to JavaScript"
 npx 0xweb config --set "settings.generate.target=mjs"
 
 
@@ -40,6 +40,13 @@ npx 0xweb install ./contracts/AppVersionManager.sol --name AppVersionManager --c
 
 echo "Execute JavaScript test script"
 npx node test/check.mjs --pin test
+
+echo "➡️ Change generation to JavaScript with CommonJS module"
+npx 0xweb config --set "settings.generate.target=cjs"
+
+
+echo "Create contracts JavaScript client"
+npx 0xweb install ./contracts/AppVersionManager.sol --name AppVersionManager --chain hardhat
 
 
 echo "Execute CJS script to get block"

@@ -5,9 +5,6 @@ import { Web3ClientFactory } from 'dequanto/clients/Web3ClientFactory';
 import { Config } from 'dequanto/config/Config';
 import { Deployments } from 'dequanto/contracts/deploy/Deployments';
 import { l } from 'dequanto/utils/$logger';
-
-
-
 import { $require } from 'dequanto/utils/$require';
 
 
@@ -33,5 +30,5 @@ async function main () {
 };
 
 main().then(
-    () => process.exit(0),
+    () => process.exit(0)
 );
