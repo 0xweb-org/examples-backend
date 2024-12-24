@@ -24,10 +24,10 @@ contract AppVersionManager is Ownable {
     Package public package;
 
     // Track all versions and their packages
-    mapping (uint => Package) public history;
+    mapping (uint => Package) public packages;
 
     // List of all previous versions
-    uint[] public previous;
+    uint[] public versions;
 
     constructor () Ownable(msg.sender) {
 
@@ -44,20 +44,21 @@ contract AppVersionManager is Ownable {
     function updatePackage(Package calldata newPackage) external onlyOwner {
         require(newPackage.version > package.version, "Newer package already published");
 
-        history[package.version] = package;
+        packages[package.version] = package;
         package = newPackage;
-        previous.push(package.version);
+        versions.push(package.version);
         emit NewPackage(package.version, block.timestamp);
     }
 
     function findPackageAtTimestamp (uint timestamp) external view returns (Package memory) {
-        if (timestamp >= package.timestamp) {
+        if (package.timestamp <= timestamp) {
             return package;
         }
-
-        for (uint i = previous.length - 1; i >= 0; i--) {
-            Package memory pkg = history[previous[i]];
-            if (timestamp >= pkg.timestamp) {
+        // the countdown loop to find the latest package for the timestamp
+        int i = int(versions.length);
+        while (--i > -1) {
+            Package memory pkg = packages[versions[uint(i)]];
+            if (pkg.timestamp <= timestamp) {
                 return pkg;
             }
         }
@@ -68,6 +69,6 @@ contract AppVersionManager is Ownable {
         if (version == package.version) {
             return package;
         }
-        return history[version];
+        return packages[version];
     }
 }

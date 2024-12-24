@@ -1,4 +1,4 @@
-import { Ownable } from "@openzeppelin/contracts/access/Ownable";
+import { Ownable } from "@openzeppelin-mock/contracts/access/Ownable";
 
 declare let msg: { sender: string };
 declare let block: { timestamp: number };
@@ -20,10 +20,10 @@ class AppVersionManager extends Ownable {
     public package: Package;
 
     // Track all versions and their packages
-    public history: Record<number, Package> ;
+    public packages: Record<number, Package> ;
 
     // List of all previous versions
-    public previous: number[] ;
+    public versions: number[] ;
 
     constructor () {
         super(msg.sender)
@@ -44,31 +44,32 @@ class AppVersionManager extends Ownable {
             throw new Error("Newer package already published");
         }
 
-        this.history[this.package.version] = this.package;
+        this.packages[this.package.version] = this.package;
         this.package = newPackage;
-        this.previous.push(this.package.version);
+        this.versions.push(this.package.version);
         window.postMessage({ type: 'NewPackage', version: this.package.version, timestamp: block.timestamp });
     }
 
     public findPackageAtTimestamp (timestamp: number): Package {
-        if (timestamp >= this.package.timestamp) {
+        if (this.package.timestamp <= timestamp) {
             return this.package;
         }
-
-        for (let i = this.previous.length - 1; i >= 0; i--) {
-            let pkg = this.history[this.previous[i]];
-            if (timestamp >= pkg.timestamp) {
+        // the countdown loop to find the latest package for the timestamp
+        let i = this.versions.length;
+        while (--i > -1) {
+            let pkg = this.packages[this.versions[i]];
+            if (pkg.timestamp <= timestamp) {
                 return pkg;
             }
         }
         throw new Error("No package found");
     }
 
-    public getUpdatePackage (currentVersion: number): Package {
-        if (currentVersion < this.package.version) {
+    public getPackage (version: number): Package {
+        if (version == this.package.version) {
             return this.package;
         }
-        return {} as Package;
+        return this.packages[version];
     }
 }
 
