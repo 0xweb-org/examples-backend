@@ -51,3 +51,7 @@ npx 0xweb install ./contracts/AppVersionManager.sol --name AppVersionManager --c
 
 echo "Execute CJS script to get block"
 npx node test/check.js --pin test
+
+
+echo "Execute API script "
+npx node test/api.mjs

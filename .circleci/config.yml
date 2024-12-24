@@ -24,6 +24,10 @@ jobs:
           command: npx hardhat node
           background: true
       - run:
+          name: Start 0xweb API server
+          command: npx 0xweb server start
+          background: true
+      - run:
           command: npx 0xweb --version && sleep 4;
       - run:
           name: Install openzeppelin

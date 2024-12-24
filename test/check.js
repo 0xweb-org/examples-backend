@@ -24,9 +24,16 @@ async function main () {
     let manager = await deployments.get(AppVersionManager);
 
     let title = await manager.title()
-
     l`Title: "${title}"`;
     $require.eq(title, 'MySuperApp', `Title does not match expected value`);
+
+    let p1 = await manager.package();
+    console.log(`Package from Property`, p1);
+    $require.eq(p1.version, 1n);
+
+    let p2 = await manager.findPackageAtTimestamp(Date.now());
+    console.log(`Package from Method`, p2);
+    $require.eq(p2.version, 1n);
 };
 
 main().then(
