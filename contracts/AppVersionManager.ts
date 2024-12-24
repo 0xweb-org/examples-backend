@@ -11,7 +11,7 @@ type Package = {
     sha256: string;
 }
 
-class AppVersionManager extends Ownable {
+export class AppVersionManager extends Ownable {
 
     public title: string;
     // @TODO: add further application related properties if required
